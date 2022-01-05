@@ -2,7 +2,7 @@
 #include <mlx.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <assert.h>
 typedef struct s_data
 {
 	void *mlx;
@@ -53,11 +53,11 @@ int main(void)
 
 	vars.index = 0;
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, width, height, "so_long");
-	// vars.img = mlx_new_image(vars.mlx, width, height);
-	vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
+//	vars.win = mlx_new_window(vars.mlx, width, height, "so_long");
+//	vars.img = mlx_new_image(vars.mlx, width, height);
 	// mlx_hook(vars.win, 2, 1L << 0, close, &vars);
-	// mlx_loop_hook(vars.mlx, render_next_frame, &vars);
-	vars.img = mlx_xpm_file_to_image(vars.mlx, relative_path, &img_width, &img_height);
+	 mlx_loop_hook(vars.mlx, render_next_frame, &vars);
+	vars.img = mlx_xpm_file_to_image(vars.mlx, relative_path, &img_width, &img_height);	vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
 	mlx_loop(vars.mlx);
 }

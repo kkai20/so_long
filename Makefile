@@ -1,7 +1,7 @@
 NAME	 	= so_long
 SRCSDIR		= ./srcs
 SRCS 	 	= \
-	$(SRCSDIR)/test1.c\
+	$(SRCSDIR)/test.c\
 
 OBJSDIR		= ./objs
 OBJS 		= $(addprefix $(OBJSDIR)/, $(notdir $(SRCS:.c=.o)))
