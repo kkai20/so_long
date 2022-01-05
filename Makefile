@@ -52,7 +52,7 @@ clean:
 .PHONY:fclean
 fclean:clean
 	$(RM) $(NAME)
-	make -C $(LIBFT_DIR) fclean
+#make -C $(LIBFT_DIR) fclean
 
 .PHONY:re
 re:fclean all
