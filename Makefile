@@ -1,23 +1,23 @@
 NAME	 	= so_long
 SRCSDIR		= ./srcs
 SRCS 	 	= \
-	$(SRCSDIR)/test.c\
-	
+	$(SRCSDIR)/test1.c\
+
 OBJSDIR		= ./objs
 OBJS 		= $(addprefix $(OBJSDIR)/, $(notdir $(SRCS:.c=.o)))
 
 
 minilibx_DIR	= ./minilibx-linux
 minilibx_A			= $(minilibx_DIR)/libmlx_Darwin.a
-DEPENDS   		= $(OBJS:.o=.d) 
+DEPENDS   		= $(OBJS:.o=.d)
 
 LIBFT_DIR	= ./libft
 LIBFT_A			= $(LIBFT_DIR)/libft.a
-DEPENDS   		= $(OBJS:.o=.d) 
+DEPENDS   		= $(OBJS:.o=.d)
 
 
 CC 				= gcc
-CFLAGS			= #-Werror -Wall -Wextra -MMD -MP 
+CFLAGS			= #-Werror -Wall -Wextra -MMD -MP
 CFLAGS_MLX		= -L/usr/X11R6/lib -lX11 -lXext -framework OpenGL -framework AppKit
 DEGUB_CFLAGS	= -g3 -fsanitize=address
 RM				= /bin/rm -f
