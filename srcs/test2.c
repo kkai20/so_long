@@ -4,7 +4,7 @@ include<stdio.h>
 #include <string.h>
 
 //各自で適宜ヘッダーファイルの設定をしてください。
-#include "minilibx-linux/mlx.h"
+#include "mlx.h"
 
 #define X_EVENT_KEY_PRESS 2
 #define X_EVENT_KEY_EXIT 17 // Exit program key code
