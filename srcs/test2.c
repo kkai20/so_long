@@ -24,8 +24,10 @@
 #define WIDTH COLS *TILE_SIZE
 #define HEIGHT ROWS *TILE_SIZE
 
-	int g_player_x = 5;
-int g_player_y = 5;
+
+
+int g_player_x = 10;
+int g_player_y = 10;
 int g_key_flag = 1;
 
 typedef struct s_img
@@ -102,6 +104,18 @@ int main_loop(t_game *game)
 	{
 		//	描画する
 		mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+		int i;
+		int j;
+
+		i = 0;
+		while (++i < 5)
+		{
+			j = 0;
+			while (++j < 5)
+			{
+				my_rec_put(game, 10 * i, 10 * j, 0x0000FF00);
+			}
+		}
 		my_rec_put(game, g_player_x, g_player_y, 0x00FF0000);
 	}
 	g_key_flag = 0;

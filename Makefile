@@ -8,7 +8,7 @@ OBJS 		= $(addprefix $(OBJSDIR)/, $(notdir $(SRCS:.c=.o)))
 
 
 minilibx_DIR	= ./minilibx-linux
-minilibx_A			= $(minilibx_DIR)/libmlx_Linux.a 
+minilibx_A			= $(minilibx_DIR)/libmlx_Linux.a
 DEPENDS   		= $(OBJS:.o=.d)
 
 LIBFT_DIR	= ./libft
