@@ -12,9 +12,30 @@ enum {
 };
 
 
+enum	e_imags {
+	GOAL,
+	WALL,
+	ITEM,
+	FREE,
+	PLAYER,
+	E_IMAGE_COUNT
+};
+
+int 	map[8][10] = {
+					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
+					{WALL,PLAYER,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,GOAL,FREE,WALL},
+					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
+					};
+
 int g_player_x = 4;
 int g_player_y = 0;
 int g_key_flag = 1;
+
 
 #define X_EVENT_KEY_PRESS 2
 #define X_EVENT_KEY_EXIT 17 // Exit program key code
@@ -28,11 +49,11 @@ int g_key_flag = 1;
 #define KEY_S 115
 #define KEY_D 100
 
-#define TILE_SIZE 32
-#define ROWS 11
-#define COLS 15
-#define WIDTH COLS *TILE_SIZE
-#define HEIGHT ROWS *TILE_SIZE
+#define TILE_SIZE 64
+#define ROWS 8
+#define COLS 10
+#define WIDTH COLS * TILE_SIZE
+#define HEIGHT ROWS * TILE_SIZE
 
 #include "mlx.h"
 #include <stdio.h>
@@ -49,6 +70,12 @@ int my_close(t_vars *game)
 }
 
 
+void	make_window(t_vars *game)
+{
+	game->mlx = mlx_init();
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "so_long");
+}
+
 int deal_key(int key_code, t_vars *game)
 {
 	if (key_code == KEY_ESC)
@@ -64,8 +91,6 @@ int deal_key(int key_code, t_vars *game)
 	g_key_flag = 1;
 	return (0);
 }
-
-
 
 int main_loop(t_vars *game)
 {
@@ -87,28 +112,33 @@ int main_loop(t_vars *game)
 	char	*free_path = "./images/free.xpm";
 
 
+
 	if (g_key_flag == 1)
 	{
-		goal_img = mlx_xpm_file_to_image(mlx, goal_path, &img_width, &img_height);
-		wall_img = mlx_xpm_file_to_image(mlx, wall_path, &img_width, &img_height);
-		item_img = mlx_xpm_file_to_image(mlx, item_path, &img_width, &img_height);
-		player_img = mlx_xpm_file_to_image(mlx, player_path, &img_width, &img_height);
-		free_img = mlx_xpm_file_to_image(mlx, free_path, &img_width, &img_height);
+		void	*images[E_IMAGE_COUNT];
+
+
+		images[GOAL] = mlx_xpm_file_to_image(mlx, goal_path, &img_width, &img_height);
+
+		images[WALL]= mlx_xpm_file_to_image(mlx, wall_path, &img_width, &img_height);
+		images[ITEM] = mlx_xpm_file_to_image(mlx, item_path, &img_width, &img_height);
+		images[PLAYER] = mlx_xpm_file_to_image(mlx, player_path, &img_width, &img_height);
+		images[FREE] = mlx_xpm_file_to_image(mlx, free_path, &img_width, &img_height);
 
 		int i;
 		int j;
-		for (i = 0; i < 5;i++)
+		for (i = 0; i < ROWS; i++)
 		{
-			for (j=0; j<5; j++)
+			for (j = 0; j < COLS; j++)
 			{
-				mlx_put_image_to_window(mlx, mlx_win, free_img, 64 * i, 64 * j);
+				mlx_put_image_to_window(mlx, mlx_win, images[map[i][j]], TILE_SIZE * j, TILE_SIZE * i);
 			}
 		}
-		mlx_put_image_to_window(mlx, mlx_win, goal_img, 64 * 0, 0);
-		mlx_put_image_to_window(mlx, mlx_win, wall_img, 64 * 1, 0);
-		mlx_put_image_to_window(mlx, mlx_win, item_img, 64 * 2, 0);
-		mlx_put_image_to_window(mlx, mlx_win, free_img, 64 * 3, 0);
-		mlx_put_image_to_window(mlx, mlx_win, player_img, 64 * g_player_x, 64 * g_player_y);
+		// mlx_put_image_to_window(mlx, mlx_win, images[0], TILE_SIZE * 0, 0);
+		// mlx_put_image_to_window(mlx, mlx_win, images[1], TILE_SIZE * 1, 0);
+		// mlx_put_image_to_window(mlx, mlx_win, images[2], TILE_SIZE * 2, 0);
+		// mlx_put_image_to_window(mlx, mlx_win, images[4], TILE_SIZE * 3, 0);
+		mlx_put_image_to_window(mlx, mlx_win, images[PLAYER], TILE_SIZE * g_player_x, TILE_SIZE * g_player_y);
 	}
 	g_key_flag = 0;
 	return (0);
@@ -116,12 +146,21 @@ int main_loop(t_vars *game)
 
 int	main(void)
 {
-	t_vars	*game = (t_vars *)malloc(sizeof(t_vars));
-	char map[][2] = {{'1','0'},{'0','1'}};
+	t_vars *game = (t_vars *)malloc(sizeof(t_vars));
 
-	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, 640, 640, "so_long");
+	for (int i = 0; i < ROWS; i++)
+	{
+		for (int j = 0; j < COLS; j++)
+		{
+			if (map[i][j]== PLAYER)
+			{
+				g_player_x = i;
+				g_player_y = j;
+			}
+		}
+	}
 
+	make_window(game);
 	mlx_hook(game->win, X_EVENT_KEY_PRESS, 1, &deal_key, game);
 	mlx_hook(game->win, X_EVENT_KEY_EXIT, 1, &my_close, game);
 	mlx_loop_hook(game->mlx, &main_loop, game);
