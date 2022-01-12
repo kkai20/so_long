@@ -1,25 +1,4 @@
-#define WINDOW_WIDTH 1024
-#define WINDOW_HIGHT 860
-
-enum {
-	ON_KEYDOWN = 2,
-	ON_KEYUP = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
-	ON_DESTROY = 17
-};
-
-
-enum	e_imags {
-	GOAL,
-	WALL,
-	ITEM,
-	FREE,
-	PLAYER,
-	E_IMAGE_COUNT
-};
+#include "so_long.h"
 
 int 	map[8][10] = {
 					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
@@ -37,32 +16,7 @@ int g_player_y = 0;
 int g_key_flag = 1;
 
 
-#define X_EVENT_KEY_PRESS 2
-#define X_EVENT_KEY_EXIT 17 // Exit program key code
 
-//キーコードはwsl ubuntu仕様です。
-// minilibx-linuxディレクトリ内の/test/mlx-testでそれぞれの環境のキーコードを確認してください。
-
-#define KEY_ESC 65307
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-
-#define TILE_SIZE 64
-#define ROWS 8
-#define COLS 10
-#define WIDTH COLS * TILE_SIZE
-#define HEIGHT ROWS * TILE_SIZE
-
-#include "mlx.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
 
 int my_close(t_vars *game)
 {
@@ -125,19 +79,13 @@ int main_loop(t_vars *game)
 		images[PLAYER] = mlx_xpm_file_to_image(mlx, player_path, &img_width, &img_height);
 		images[FREE] = mlx_xpm_file_to_image(mlx, free_path, &img_width, &img_height);
 
-		int i;
-		int j;
-		for (i = 0; i < ROWS; i++)
+		for (int i = 0; i < ROWS; i++)
 		{
-			for (j = 0; j < COLS; j++)
+			for (int j = 0; j < COLS; j++)
 			{
 				mlx_put_image_to_window(mlx, mlx_win, images[map[i][j]], TILE_SIZE * j, TILE_SIZE * i);
 			}
 		}
-		// mlx_put_image_to_window(mlx, mlx_win, images[0], TILE_SIZE * 0, 0);
-		// mlx_put_image_to_window(mlx, mlx_win, images[1], TILE_SIZE * 1, 0);
-		// mlx_put_image_to_window(mlx, mlx_win, images[2], TILE_SIZE * 2, 0);
-		// mlx_put_image_to_window(mlx, mlx_win, images[4], TILE_SIZE * 3, 0);
 		mlx_put_image_to_window(mlx, mlx_win, images[PLAYER], TILE_SIZE * g_player_x, TILE_SIZE * g_player_y);
 	}
 	g_key_flag = 0;
