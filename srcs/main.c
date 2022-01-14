@@ -121,6 +121,43 @@ int main_loop(t_vars *game)
 
 int	main(void)
 {
+	int	index;//読み込み回数を確認する用
+		//static int i;
+	int	fd = open("./maps/sample_8_10.ber", O_RDONLY);
+	printf("fd = %d\n", fd);
+	char	*receiver = NULL;
+	int row;
+	int column;
+
+	row = 0;
+	while (1)
+	{
+		receiver = get_next_line(fd);
+		if (!receiver)
+			break ;
+		column = -1;
+		while (receiver[++column] != '\n')
+		{
+			if (receiver[column] == '0')
+				map[row][column] = FREE;
+			if (receiver[column] == '1')
+				map[row][column] = WALL;
+			if (receiver[column] == 'C')
+				map[row][column] = ITEM;
+			if (receiver[column] == 'E')
+				map[row][column] = GOAL;
+			if (receiver[column] == 'P')
+				map[row][column] = PLAYER;
+		}
+		free(receiver);
+		row++;
+	}
+
+
+
+	printf("map[6][1]=%d",map[6][1]);
+
+
 	t_vars *game = (t_vars *)malloc(sizeof(t_vars));
 
 	for (int i = 0; i < ROWS; i++)
@@ -131,8 +168,8 @@ int	main(void)
 				g_itemNum++;
 			if (map[i][j]== PLAYER)
 			{
-				g_player_x = i;
-				g_player_y = j;
+				g_player_x = j;
+				g_player_y = i;
 				map[i][j] = FREE;
 			}
 		}

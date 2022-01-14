@@ -1,5 +1,6 @@
 #ifndef SO_LONG_H
 #define SO_LONG_H
+
 #define WINDOW_WIDTH 1024
 #define WINDOW_HIGHT 860
 
@@ -28,7 +29,11 @@ enum e_imags
 };
 
 
-
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include "get_next_line.h"
 
 #define X_EVENT_KEY_PRESS 2
 #define X_EVENT_KEY_EXIT 17 // Exit program key code
