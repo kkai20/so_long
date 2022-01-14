@@ -3,6 +3,9 @@
 #define WINDOW_WIDTH 1024
 #define WINDOW_HIGHT 860
 
+#include <unistd.h>
+#include <stdio.h>
+
 enum
 {
 	ON_KEYDOWN = 2,
@@ -23,7 +26,6 @@ enum e_imags
 	PLAYER,
 	E_IMAGE_COUNT
 };
-
 
 
 

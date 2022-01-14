@@ -1,22 +1,24 @@
 #include "so_long.h"
 
+
+
 int 	map[8][10] = {
 					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
-					{WALL,PLAYER,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+					{WALL,PLAYER,FREE,FREE,FREE,FREE,FREE,FREE,ITEM,WALL},
 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,GOAL,FREE,WALL},
 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
 					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
+
 					};
 
 int g_player_x = 4;
 int g_player_y = 0;
 int g_key_flag = 1;
-
-
-
+int g_itemNum = 0;
+int	g_step_count = 0;
 
 int my_close(t_vars *game)
 {
@@ -30,8 +32,13 @@ void	make_window(t_vars *game)
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "so_long");
 }
 
-int deal_key(int key_code, t_vars *game)
+int	deal_key(int key_code, t_vars *game)
 {
+	int old_player_x;
+	int old_player_y;
+
+	old_player_x = g_player_x;
+	old_player_y = g_player_y;
 	if (key_code == KEY_ESC)
 		exit(0);
 	else if (key_code == KEY_W)
@@ -43,6 +50,26 @@ int deal_key(int key_code, t_vars *game)
 	else if (key_code == KEY_D)
 		g_player_x += 1;
 	g_key_flag = 1;
+	if (map[g_player_y][g_player_x] == WALL)
+	{
+		g_player_x = old_player_x;
+		g_player_y = old_player_y;
+	}
+	if (g_player_x != old_player_x || g_player_y != old_player_y)
+	{
+		g_step_count++;
+		printf("%d\n", g_step_count);
+	}
+	if(map[g_player_y][g_player_x] == ITEM)
+	{
+		g_itemNum--;
+		map[g_player_y][g_player_x] = FREE;
+	}
+	if (map[g_player_y][g_player_x] == GOAL && g_itemNum <= 0)
+	{
+		my_close(game);
+	}
+
 	return (0);
 }
 
@@ -100,10 +127,13 @@ int	main(void)
 	{
 		for (int j = 0; j < COLS; j++)
 		{
+			if (map [i][j] == ITEM)
+				g_itemNum++;
 			if (map[i][j]== PLAYER)
 			{
 				g_player_x = i;
 				g_player_y = j;
+				map[i][j] = FREE;
 			}
 		}
 	}
