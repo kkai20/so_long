@@ -2,6 +2,8 @@ NAME	 	= so_long
 SRCSDIR		= ./srcs
 SRCS 	 	= \
 	$(SRCSDIR)/main.c\
+	$(SRCSDIR)/get_next_line.c\
+	$(SRCSDIR)/get_next_line_utils.c
 
 OBJSDIR		= ./objs
 OBJS 		= $(addprefix $(OBJSDIR)/, $(notdir $(SRCS:.c=.o)))
