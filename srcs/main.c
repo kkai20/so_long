@@ -1,18 +1,19 @@
 #include "so_long.h"
 
 
+int **map;
 
-int 	map[8][10] = {
-					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
-					{WALL,PLAYER,FREE,FREE,FREE,FREE,FREE,FREE,ITEM,WALL},
-					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,GOAL,FREE,WALL},
-					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
+// int 	map[8][10] = {
+// 					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
+// 					{WALL,PLAYER,FREE,FREE,FREE,FREE,FREE,FREE,ITEM,WALL},
+// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,GOAL,FREE,WALL},
+// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
+// 					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
 
-					};
+// 					};
 
 int g_player_x = 4;
 int g_player_y = 0;
@@ -132,11 +133,11 @@ int	main(void)
 	int row;
 	int column;
 	int ret_value;
+	int i;
 
-
-	fd1 = open("./maps/sample_8_10.ber", O_RDONLY);
+	fd1 = open("./maps/sample1.ber", O_RDONLY);
 	printf("fd1 = %d\n", fd1);
-	fd2 = open("./maps/sample_8_10.ber", O_RDONLY);
+	fd2 = open("./maps/sample1.ber", O_RDONLY);
 	printf("fd2 = %d\n", fd2);
 
 	g_rows = 0;
@@ -146,9 +147,22 @@ int	main(void)
 		if (ret_value != 1)
 			break ;
 		g_rows++;
+		column = 0;
+		while (receiver[column] != '\0')
+		{
+			column++;
+		}
+		g_cols = column;
 		free(receiver);
 	}
 	printf("rows=%d\n", g_rows);
+	printf("cols=%d\n", g_cols);
+	map = (int **)calloc(sizeof(int *), g_rows+1);
+	for (int i= 0;i<g_rows; i++)
+	{
+		map[i]=(int *) calloc(sizeof(int),g_cols+1);
+	}
+
 
 	close(fd1);
 
