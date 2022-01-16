@@ -4,6 +4,8 @@ SRCS 	 	= \
 	$(SRCSDIR)/main.c\
 	$(SRCSDIR)/init_map.c\
 	$(SRCSDIR)/init_window.c\
+	$(SRCSDIR)/event_key_press.c\
+	$(SRCSDIR)/main_loop.c\
 	$(SRCSDIR)/get_next_line.c\
 	$(SRCSDIR)/get_next_line_utils.c
 
