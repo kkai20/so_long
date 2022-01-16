@@ -10,6 +10,7 @@ void	get_map_size(t_vars *game)
 	receiver = NULL;
 	fd1 = open("./maps/sample1.ber", O_RDONLY);
 	game->rows = 0;
+	game->cols = -1;
 	while (1)
 	{
 		ret_value = get_next_line(fd1, &receiver);
@@ -21,6 +22,8 @@ void	get_map_size(t_vars *game)
 		{
 			column++;
 		}
+		if (game->cols != -1 && game->cols != column)
+			my_close(game);
 		game->cols = column;
 		free(receiver);
 	}
@@ -48,14 +51,16 @@ void	read_map(t_vars *game)
 		{
 			if (receiver[column] == '0')
 				game->map[row][column] = FREE;
-			if (receiver[column] == '1')
+			else if (receiver[column] == '1')
 				game->map[row][column] = WALL;
-			if (receiver[column] == 'C')
+			else if (receiver[column] == 'C')
 				game->map[row][column] = ITEM;
-			if (receiver[column] == 'E')
+			else if (receiver[column] == 'E')
 				game->map[row][column] = GOAL;
-			if (receiver[column] == 'P')
+			else if (receiver[column] == 'P')
 				game->map[row][column] = PLAYER;
+			else
+				my_close(game);
 		}
 		free(receiver);
 		row++;
