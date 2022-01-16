@@ -35,7 +35,7 @@ int	deal_key(int key_code, t_vars *game)
 	}
 	if (game->map[game->player_y][game->player_x] == GOAL && game->itemNum <= 0)
 	{
-		my_close(game);
+		my_close(game, "Congraturations!!");
 	}
 	return (0);
 }

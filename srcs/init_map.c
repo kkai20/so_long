@@ -23,7 +23,7 @@ void	get_map_size(t_vars *game)
 			column++;
 		}
 		if (game->cols != -1 && game->cols != column)
-			my_close(game);
+			my_close(game, "map is not rectangle");
 		game->cols = column;
 		free(receiver);
 	}
@@ -60,7 +60,7 @@ void	read_map(t_vars *game)
 			else if (receiver[column] == 'P')
 				game->map[row][column] = PLAYER;
 			else
-				my_close(game);
+				my_close(game, "illegal charactor.");
 		}
 		free(receiver);
 		row++;

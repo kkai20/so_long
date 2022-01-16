@@ -1,20 +1,21 @@
 #include "so_long.h"
 
-int	my_close(t_vars *game)
+int	my_close(t_vars *game, char *message)
 {
 	(void)game;
-	printf("error\n");
+	printf("Error: %s\n", message);
+
 	exit(0);
 }
 
 void	check_map(t_vars *game)
 {
 	if (game->itemNum <= 0)
-		my_close(game);
+		my_close(game, "too few items");
 	if (game->playerNum != 1)
-		my_close(game);
+		my_close(game, "player must be only one");
 	if (game->goalNum <= 0)
-		my_close(game);
+		my_close(game, "too many goals");
 }
 
 int	main(void)
