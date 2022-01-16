@@ -28,7 +28,7 @@ int	deal_key(int key_code, t_vars *game)
 		game->step_count++;
 		printf("%d\n", game->step_count);
 	}
-	if(game->map[game->player_y][game->player_x] == ITEM)
+	if (game->map[game->player_y][game->player_x] == ITEM)
 	{
 		game->itemNum--;
 		game->map[game->player_y][game->player_x] = FREE;

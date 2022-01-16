@@ -14,7 +14,7 @@ void	get_map_size(t_vars *game)
 	{
 		ret_value = get_next_line(fd1, &receiver);
 		if (ret_value != 1)
-			break;
+			break ;
 		game->rows++;
 		column = 0;
 		while (receiver[column] != '\0')
@@ -35,7 +35,6 @@ void	read_map(t_vars *game)
 	int		column;
 	int		ret_value;
 
-
 	fd2 = open("./maps/sample1.ber", O_RDONLY);
 	row = 0;
 	receiver = NULL;
@@ -43,7 +42,7 @@ void	read_map(t_vars *game)
 	{
 		ret_value = get_next_line(fd2, &receiver);
 		if (ret_value != 1)
-			break;
+			break ;
 		column = -1;
 		while (receiver[++column] != '\0')
 		{
