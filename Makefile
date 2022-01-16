@@ -2,6 +2,8 @@ NAME	 	= so_long
 SRCSDIR		= ./srcs
 SRCS 	 	= \
 	$(SRCSDIR)/main.c\
+	$(SRCSDIR)/init_map.c\
+	$(SRCSDIR)/init_window.c\
 	$(SRCSDIR)/get_next_line.c\
 	$(SRCSDIR)/get_next_line_utils.c
 

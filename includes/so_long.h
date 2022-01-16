@@ -27,6 +27,7 @@ enum e_imags
 };
 
 
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -58,6 +59,20 @@ enum e_imags
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
+	int 	**map;
+	int 	player_x;
+	int 	player_y;
+	int 	key_flag;
+	int 	itemNum;
+	int		step_count;
+	int		rows;
+	int		cols;
+	void	*images[E_IMAGE_COUNT];
 }				t_vars;
+
+void	make_window(t_vars *game);
+void	init_images(t_vars *game);
+void	get_map_size(t_vars *game);
+void	read_map(t_vars *game);
 
 #endif
