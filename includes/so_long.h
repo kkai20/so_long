@@ -64,6 +64,8 @@ typedef struct	s_vars {
 	int 	player_y;
 	int 	key_flag;
 	int 	itemNum;
+	int		playerNum;
+	int		goalNum;
 	int		step_count;
 	int		rows;
 	int		cols;

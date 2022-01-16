@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		".*lintrc": "json",
+		"so_long.h": "c"
+	}
+}
