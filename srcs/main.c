@@ -3,18 +3,6 @@
 
 int **map;
 
-// int 	map[8][10] = {
-// 					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
-// 					{WALL,PLAYER,FREE,FREE,FREE,FREE,FREE,FREE,ITEM,WALL},
-// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,GOAL,FREE,WALL},
-// 					{WALL,FREE,FREE,FREE,FREE,FREE,FREE,FREE,FREE,WALL},
-// 					{WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL,WALL},
-
-// 					};
-
 int g_player_x = 4;
 int g_player_y = 0;
 int g_key_flag = 1;
@@ -22,6 +10,7 @@ int g_itemNum = 0;
 int	g_step_count = 0;
 int	g_rows = 8;
 int	g_cols = 10;
+void	*images[E_IMAGE_COUNT];
 
 
 int my_close(t_vars *game)
@@ -36,6 +25,19 @@ void	make_window(t_vars *game)
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, g_cols * TILE_SIZE, g_rows * TILE_SIZE, "so_long");
 }
+
+void	init_images(t_vars *game)
+{
+	int		img_width;
+	int		img_height;
+
+	images[GOAL] = mlx_xpm_file_to_image(game->mlx, GOAL_PATH, &img_width, &img_height);
+	images[WALL]= mlx_xpm_file_to_image(game->mlx, WALL_PATH, &img_width, &img_height);
+	images[ITEM] = mlx_xpm_file_to_image(game->mlx, ITEM_PATH, &img_width, &img_height);
+	images[PLAYER] = mlx_xpm_file_to_image(game->mlx, PLAYER_PATH, &img_width, &img_height);
+	images[FREE] = mlx_xpm_file_to_image(game->mlx, FREE_PATH, &img_width, &img_height);
+}
+
 
 int	deal_key(int key_code, t_vars *game)
 {
@@ -83,29 +85,9 @@ int main_loop(t_vars *game)
 	void	*mlx = game->mlx;
 	void	*mlx_win = game->win;
 
-	int		img_width;
-	int		img_height;
-
-	char	*goal_path = "./images/goal.xpm";
-	char	*wall_path = "./images/wall.xpm";
-	char	*item_path = "./images/item.xpm";
-	char	*player_path = "./images/player.xpm";
-	char	*free_path = "./images/free.xpm";
-
-
 
 	if (g_key_flag == 1)
 	{
-		void	*images[E_IMAGE_COUNT];
-
-
-		images[GOAL] = mlx_xpm_file_to_image(mlx, goal_path, &img_width, &img_height);
-
-		images[WALL]= mlx_xpm_file_to_image(mlx, wall_path, &img_width, &img_height);
-		images[ITEM] = mlx_xpm_file_to_image(mlx, item_path, &img_width, &img_height);
-		images[PLAYER] = mlx_xpm_file_to_image(mlx, player_path, &img_width, &img_height);
-		images[FREE] = mlx_xpm_file_to_image(mlx, free_path, &img_width, &img_height);
-
 		for (int i = 0; i < g_rows; i++)
 		{
 			for (int j = 0; j < g_cols; j++)
@@ -119,19 +101,16 @@ int main_loop(t_vars *game)
 	return (0);
 }
 
-int	main(void)
+void get_map_size(t_vars *game)
 {
 	int	fd1;
-	int	fd2;
 	char	*receiver = NULL;
-	int row;
 	int column;
 	int ret_value;
 
+	(void)game;
 	fd1 = open("./maps/sample1.ber", O_RDONLY);
 	printf("fd1 = %d\n", fd1);
-	fd2 = open("./maps/sample1.ber", O_RDONLY);
-	printf("fd2 = %d\n", fd2);
 
 	g_rows = 0;
 	while(1)
@@ -150,6 +129,20 @@ int	main(void)
 	}
 	printf("rows=%d\n", g_rows);
 	printf("cols=%d\n", g_cols);
+	close(fd1);
+}
+
+int	main(void)
+{
+	int	fd2;
+	char	*receiver = NULL;
+	int row;
+	int column;
+	int ret_value;
+
+	t_vars *game = (t_vars *)malloc(sizeof(t_vars));
+
+	get_map_size(game);
 	map = (int **)calloc(sizeof(int *), g_rows+1);
 	for (int i= 0;i<g_rows; i++)
 	{
@@ -157,20 +150,19 @@ int	main(void)
 	}
 
 
-	close(fd1);
+	fd2 = open("./maps/sample1.ber", O_RDONLY);
+	printf("fd2 = %d\n", fd2);
 
 	row = 0;
 	receiver = NULL;
 	while (1)
 	{
-		// write(1, "hello\n" ,6);
 		ret_value = get_next_line(fd2, &receiver);
 		if (ret_value != 1)
 			break ;
 		column = -1;
 		while (receiver[++column] != '\0')
 		{
-			// write(1, "NeKo\n" ,5);
 			if (receiver[column] == '0')
 				map[row][column] = FREE;
 			if (receiver[column] == '1')
@@ -188,8 +180,6 @@ int	main(void)
 	}
 
 
-	t_vars *game = (t_vars *)malloc(sizeof(t_vars));
-
 	for (int i = 0; i < g_rows; i++)
 	{
 		for (int j = 0; j < g_cols; j++)
@@ -206,6 +196,8 @@ int	main(void)
 	}
 
 	make_window(game);
+	init_images(game);
+
 	mlx_hook(game->win, X_EVENT_KEY_PRESS, 1, &deal_key, game);
 	mlx_hook(game->win, X_EVENT_KEY_EXIT, 1, &my_close, game);
 	mlx_loop_hook(game->mlx, &main_loop, game);

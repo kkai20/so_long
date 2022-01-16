@@ -39,11 +39,16 @@ enum e_imags
 //キーコードはwsl ubuntu仕様です。
 // minilibx-linuxディレクトリ内の/test/mlx-testでそれぞれの環境のキーコードを確認してください。
 
-#define KEY_ESC 65307
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define GOAL_PATH "./images/goal.xpm"
+# define WALL_PATH "./images/wall.xpm"
+# define ITEM_PATH "./images/item.xpm"
+# define PLAYER_PATH "./images/player.xpm"
+# define FREE_PATH "./images/free.xpm"
 
 #define TILE_SIZE 64
 
