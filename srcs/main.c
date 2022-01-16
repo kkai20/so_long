@@ -26,6 +26,7 @@ int	g_cols = 10;
 
 int my_close(t_vars *game)
 {
+	(void)game;
 	exit(0);
 }
 
@@ -81,11 +82,6 @@ int main_loop(t_vars *game)
 {
 	void	*mlx = game->mlx;
 	void	*mlx_win = game->win;
-	void	*goal_img;
-	void	*wall_img;
-	void	*item_img;
-	void	*player_img;
-	void	*free_img;
 
 	int		img_width;
 	int		img_height;
@@ -125,15 +121,12 @@ int main_loop(t_vars *game)
 
 int	main(void)
 {
-	int	index;//読み込み回数を確認する用
-		//static int i;
 	int	fd1;
 	int	fd2;
 	char	*receiver = NULL;
 	int row;
 	int column;
 	int ret_value;
-	int i;
 
 	fd1 = open("./maps/sample1.ber", O_RDONLY);
 	printf("fd1 = %d\n", fd1);
