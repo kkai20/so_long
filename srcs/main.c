@@ -126,21 +126,44 @@ int	main(void)
 {
 	int	index;//読み込み回数を確認する用
 		//static int i;
-	int	fd = open("./maps/sample_8_10.ber", O_RDONLY);
-	printf("fd = %d\n", fd);
+	int	fd1;
+	int	fd2;
 	char	*receiver = NULL;
 	int row;
 	int column;
+	int ret_value;
+
+
+	fd1 = open("./maps/sample_8_10.ber", O_RDONLY);
+	printf("fd1 = %d\n", fd1);
+	fd2 = open("./maps/sample_8_10.ber", O_RDONLY);
+	printf("fd2 = %d\n", fd2);
+
+	g_rows = 0;
+	while(1)
+	{
+		ret_value = get_next_line(fd1, &receiver);
+		if (ret_value != 1)
+			break ;
+		g_rows++;
+		free(receiver);
+	}
+	printf("rows=%d\n", g_rows);
+
+	close(fd1);
 
 	row = 0;
+	receiver = NULL;
 	while (1)
 	{
-		receiver = get_next_line(fd);
-		if (!receiver)
+		// write(1, "hello\n" ,6);
+		ret_value = get_next_line(fd2, &receiver);
+		if (ret_value != 1)
 			break ;
 		column = -1;
-		while (receiver[++column] != '\n')
+		while (receiver[++column] != '\0')
 		{
+			// write(1, "NeKo\n" ,5);
 			if (receiver[column] == '0')
 				map[row][column] = FREE;
 			if (receiver[column] == '1')
@@ -154,6 +177,7 @@ int	main(void)
 		}
 		free(receiver);
 		row++;
+		close(fd2);
 	}
 
 

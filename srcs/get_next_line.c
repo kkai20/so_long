@@ -1,99 +1,111 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/04 19:28:48 by kkai              #+#    #+#             */
+/*   Updated: 2021/05/22 02:37:41 by kkai             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-int	file_read(t_gnl_status *status, t_gnl_status_var *status_var)
+static int	ft_malloc(char **line, char **buff, int *flag)
 {
-	ssize_t	rc;
-
-	if (status->buffer == NULL)
+	*flag = 0;
+	*line = (char *)malloc(1);
+	if (*line == NULL)
+		return (-1);
+	*line[0] = '\0';
+	*buff = (char *)malloc(BUFFER_SIZE + 1);
+	if (*buff == NULL)
 	{
-		status->next_n = 0;
-		status->buffer = (char *)malloc((size_t)BUFFER_SIZE + 1);
-		if (status->buffer == NULL)
-			return (-1);
-		rc = read(status_var->fd, status->buffer, BUFFER_SIZE);
-		if (rc <= 0)
-		{
-			free(status->buffer);
-			status->buffer = NULL;
-			if (rc == 0)
-				return (0);
-			return (-1);
-		}
-		status->buffer[rc] = '\0';
+		free(*line);
+		return (-1);
 	}
 	return (1);
 }
 
-int	organizer(t_gnl_status *st, t_gnl_status_var *status_var)
+static size_t	ft_strchr(char *buff, char c)
 {
-	char					*tmp;
+	size_t	i;
 
-	if (ft_strchr(&st->buffer[st->next_n], '\n'))
+	i = 0;
+	while (buff[i] != '\0')
 	{
-		st->next_n = ft_strchr(&st->buffer[st->next_n], '\n') + 1 - st->buffer;
-		if (st->next_n == BUFFER_SIZE)
-		{
-			free(st->buffer);
-			st->buffer = NULL;
-		}
-		tmp = ft_strchr(status_var->ans, '\n') + 1;
-		*tmp = '\0';
-		return (0);
+		if (buff[i] == c)
+			return (i);
+		i++;
 	}
-	if (st->buffer[st->next_n] == '\0')
-	{
-		free(st->buffer);
-		free(status_var->ans);
-		status_var->ans = NULL;
-		return (0);
-	}
-	return (1);
+	return (i);
 }
 
-int	loop_handler(t_gnl_status *status, t_gnl_status_var *status_var)
+static int	ft_put_line(char **line, char **memo, char *buff)
 {
-	int		ret;
+	int		flag;
+	size_t	n_add;
 	char	*tmp;
 
-	ret = file_read(status, status_var);
-	if (ret < 0)
-		return (-1);
-	if (ret == 0)
-		return (0);
-	if (status_var->ans == NULL)
-		status_var->ans = ft_strdup("");
-	tmp = ft_strjoin(status_var->ans, &status->buffer[status->next_n]);
+	n_add = ft_strchr(buff, '\n');
+	tmp = ft_strjoin(*line, buff, n_add);
 	if (tmp == NULL)
 		return (-1);
-	free(status_var->ans);
-	status_var->ans = tmp;
-	ret = organizer(status, status_var);
-	if (ret == 0)
-		return (0);
-	free (status->buffer);
-	status->buffer = NULL;
-	return (1);
+	free(*line);
+	*line = tmp;
+	tmp = NULL;
+	flag = 0;
+	if (buff[n_add] == '\n')
+	{
+		tmp = ft_strdup(&buff[n_add + 1]);
+		if (tmp == NULL)
+			return (-1);
+		flag = 1;
+	}
+	free(*memo);
+	*memo = tmp;
+	tmp = NULL;
+	return (flag);
 }
 
-char	*get_next_line(int fd)
+static void	ft_free_buff(int flag, char **buff, char **memo, char **line)
 {
-	static t_gnl_status		status;
-	t_gnl_status_var		status_var;
-	int						ret;
-
-	status_var.fd = fd;
-	status_var.ans = NULL;
-	while (true)
+	free(*buff);
+	*buff = NULL;
+	if (flag == -1)
 	{
-		ret = loop_handler(&status, &status_var);
-		if (ret < 0)
-			break ;
-		if (ret == 0)
-			return (status_var.ans);
+		free(*memo);
+		*memo = NULL;
+		free(*line);
 	}
-	free(status.buffer);
-	status.buffer = NULL;
-	free(status_var.ans);
-	status_var.ans = NULL;
-	return (NULL);
+}
+
+int	get_next_line(int fd, char **line)
+{
+	static char	*memo[256];
+	char		*buff;
+	int			flag;
+	ssize_t		n;
+
+	if (fd < 0 || 256 <= fd || line == NULL || BUFFER_SIZE <= 0)
+		return (-1);
+	if (ft_malloc(line, &buff, &flag) == -1)
+		return (-1);
+	if (memo[fd])
+		flag = ft_put_line(line, &memo[fd], memo[fd]);
+	n = 0;
+	if (flag == 0)
+		n = read(fd, buff, BUFFER_SIZE);
+	while (n > 0 && flag == 0)
+	{
+		buff[n] = '\0';
+		flag = ft_put_line(line, &memo[fd], buff);
+		if (flag == 0)
+			n = read(fd, buff, BUFFER_SIZE);
+	}
+	ft_free_buff(flag, &buff, &memo[fd], line);
+	if (n == -1)
+		return (-1);
+	return (flag);
 }
