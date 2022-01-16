@@ -1,8 +1,6 @@
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HIGHT 860
 
 #include <unistd.h>
 #include <stdio.h>
@@ -48,10 +46,6 @@ enum e_imags
 #define KEY_D 100
 
 #define TILE_SIZE 64
-#define ROWS 8
-#define COLS 10
-#define WIDTH COLS * TILE_SIZE
-#define HEIGHT ROWS * TILE_SIZE
 
 #include "mlx.h"
 #include <stdio.h>

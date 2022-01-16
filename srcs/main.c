@@ -19,6 +19,9 @@ int g_player_y = 0;
 int g_key_flag = 1;
 int g_itemNum = 0;
 int	g_step_count = 0;
+int	g_rows = 8;
+int	g_cols = 10;
+
 
 int my_close(t_vars *game)
 {
@@ -29,7 +32,7 @@ int my_close(t_vars *game)
 void	make_window(t_vars *game)
 {
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "so_long");
+	game->win = mlx_new_window(game->mlx, g_cols * TILE_SIZE, g_rows * TILE_SIZE, "so_long");
 }
 
 int	deal_key(int key_code, t_vars *game)
@@ -106,9 +109,9 @@ int main_loop(t_vars *game)
 		images[PLAYER] = mlx_xpm_file_to_image(mlx, player_path, &img_width, &img_height);
 		images[FREE] = mlx_xpm_file_to_image(mlx, free_path, &img_width, &img_height);
 
-		for (int i = 0; i < ROWS; i++)
+		for (int i = 0; i < g_rows; i++)
 		{
-			for (int j = 0; j < COLS; j++)
+			for (int j = 0; j < g_cols; j++)
 			{
 				mlx_put_image_to_window(mlx, mlx_win, images[map[i][j]], TILE_SIZE * j, TILE_SIZE * i);
 			}
@@ -154,15 +157,11 @@ int	main(void)
 	}
 
 
-
-	printf("map[6][1]=%d",map[6][1]);
-
-
 	t_vars *game = (t_vars *)malloc(sizeof(t_vars));
 
-	for (int i = 0; i < ROWS; i++)
+	for (int i = 0; i < g_rows; i++)
 	{
-		for (int j = 0; j < COLS; j++)
+		for (int j = 0; j < g_cols; j++)
 		{
 			if (map [i][j] == ITEM)
 				g_itemNum++;
