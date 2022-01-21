@@ -2,11 +2,13 @@
 
 int	main_loop(t_vars *game)
 {
-	void	*mlx = game->mlx;
-	void	*mlx_win = game->win;
+	void	*mlx;
+	void	*mlx_win;
 	int		i;
 	int		j;
 
+	mlx = game->mlx;
+	mlx_win = game->win;
 	if (game->key_flag == 1)
 	{
 		i = 0;

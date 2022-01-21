@@ -1,5 +1,31 @@
 #include "so_long.h"
 
+void	count_map(t_vars *game)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < game->rows)
+	{
+		j = -1;
+		while (++j < game->cols)
+		{
+			if (game->map[i][j] == ITEM)
+				game->itemNum++;
+			if (game->map[i][j] == PLAYER)
+			{
+				game->playerNum++;
+				game->player_x = j;
+				game->player_y = i;
+				game->map[i][j] = FREE;
+			}
+			if (game->map[i][j] == GOAL)
+				game->goalNum++;
+		}
+	}
+}
+
 void	get_map_size(t_vars *game)
 {
 	int		fd1;

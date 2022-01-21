@@ -4,7 +4,6 @@ int	my_close(t_vars *game, char *message)
 {
 	mlx_destroy_window(game->mlx, game->win);
 	printf("%s", message);
-
 	exit(0);
 }
 
@@ -24,14 +23,20 @@ void	check_map(t_vars *game)
 		my_close(game, "Error: too many goals\n");
 }
 
+void	register_hooks(t_vars *game)
+{
+	mlx_hook(game->win, X_EVENT_KEY_PRESS, 1, &deal_key, game);
+	mlx_hook(game->win, X_EVENT_KEY_EXIT, 1, &simple_close, game);
+	mlx_loop_hook(game->mlx, &main_loop, game);
+	mlx_loop(game->mlx);
+}
+
 int	main(int argc, char **argv)
 {
 	t_vars	*game;
 	int		i;
-	int		j;
 
 	game = (t_vars *)ft_calloc(sizeof(t_vars), 1);
-
 	if (argc != 2)
 		my_close(game, "illegal arguments");
 	game->map_filepath = argv[1];
@@ -45,32 +50,9 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	read_map(game);
-	i = 0;
-	while (i < game->rows)
-	{
-		j = 0;
-		while (j < game->cols)
-		{
-			if (game->map [i][j] == ITEM)
-				game->itemNum++;
-			if (game->map[i][j] == PLAYER)
-			{
-				game->playerNum++;
-				game->player_x = j;
-				game->player_y = i;
-				game->map[i][j] = FREE;
-			}
-			if (game->map[i][j] == GOAL)
-				game->goalNum++;
-			j++;
-		}
-		i++;
-	}
+	count_map(game);
 	check_map(game);
 	make_window(game);
 	init_images(game);
-	mlx_hook(game->win, X_EVENT_KEY_PRESS, 1, &deal_key, game);
-	mlx_hook(game->win, X_EVENT_KEY_EXIT, 1, &simple_close, game);
-	mlx_loop_hook(game->mlx, &main_loop, game);
-	mlx_loop(game->mlx);
+	register_hooks(game);
 }

@@ -79,8 +79,9 @@ void	get_map_size(t_vars *game);
 void	read_map(t_vars *game);
 int		deal_key(int key_code, t_vars *game);
 int		main_loop(t_vars *game);
-int	my_close(t_vars *game, char *message);
+int		my_close(t_vars *game, char *message);
 
 void	*ft_calloc(size_t number, size_t size);
 void	ft_bzero(void *s, size_t n);
+void	count_map(t_vars *game);
 #endif
