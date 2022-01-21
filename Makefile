@@ -2,6 +2,8 @@ NAME	 	= so_long
 SRCSDIR		= ./srcs
 SRCS 	 	= \
 	$(SRCSDIR)/main.c\
+	$(SRCSDIR)/ft_calloc.c\
+	$(SRCSDIR)/ft_bzero.c\
 	$(SRCSDIR)/init_map.c\
 	$(SRCSDIR)/init_window.c\
 	$(SRCSDIR)/event_key_press.c\

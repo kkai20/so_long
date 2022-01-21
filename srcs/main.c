@@ -30,18 +30,18 @@ int	main(int argc, char **argv)
 	int		i;
 	int		j;
 
-	game = (t_vars *)calloc(sizeof(t_vars), 1);
+	game = (t_vars *)ft_calloc(sizeof(t_vars), 1);
 
 	if (argc != 2)
 		my_close(game, "illegal arguments");
 	game->map_filepath = argv[1];
 	game->key_flag = 1;
 	get_map_size(game);
-	game->map = (int **)calloc(sizeof(int *), game->rows + 1);
+	game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
 	i = 0;
 	while (i < game->rows)
 	{
-		game->map[i] = (int *) calloc(sizeof(int), game->cols + 1);
+		game->map[i] = (int *)ft_calloc(sizeof(int), game->cols + 1);
 		i++;
 	}
 	read_map(game);
