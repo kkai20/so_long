@@ -1,4 +1,3 @@
-
 #include "get_next_line.h"
 
 static int	ft_malloc(char **line, char **buff, int *flag)

@@ -1,12 +1,7 @@
 #include "so_long.h"
 
-int	deal_key(int key_code, t_vars *game)
+void	check_key_code(int key_code, t_vars *game)
 {
-	int	old_player_x;
-	int	old_player_y;
-
-	old_player_x = game->player_x;
-	old_player_y = game->player_y;
 	if (key_code == KEY_ESC)
 		my_close(game, "");
 	else if (key_code == KEY_W)
@@ -18,6 +13,16 @@ int	deal_key(int key_code, t_vars *game)
 	else if (key_code == KEY_D)
 		game->player_x += 1;
 	game->key_flag = 1;
+}
+
+int	deal_key(int key_code, t_vars *game)
+{
+	int	old_player_x;
+	int	old_player_y;
+
+	old_player_x = game->player_x;
+	old_player_y = game->player_y;
+	check_key_code(key_code, game);
 	if (game->map[game->player_y][game->player_x] == WALL)
 	{
 		game->player_x = old_player_x;
@@ -34,8 +39,6 @@ int	deal_key(int key_code, t_vars *game)
 		game->map[game->player_y][game->player_x] = FREE;
 	}
 	if (game->map[game->player_y][game->player_x] == GOAL && game->itemNum <= 0)
-	{
 		my_close(game, "Congraturations!!\n");
-	}
 	return (0);
 }
