@@ -3,19 +3,25 @@
 int	my_close(t_vars *game, char *message)
 {
 	(void)game;
-	printf("Error: %s\n", message);
+	printf("%s", message);
 
+	exit(0);
+}
+
+int	simple_close(t_vars *game)
+{
+	my_close(game, "");
 	exit(0);
 }
 
 void	check_map(t_vars *game)
 {
 	if (game->itemNum <= 0)
-		my_close(game, "too few items");
+		my_close(game, "Error: too few items\n");
 	if (game->playerNum != 1)
-		my_close(game, "player must be only one");
+		my_close(game, "Error: player must be only one\n");
 	if (game->goalNum <= 0)
-		my_close(game, "too many goals");
+		my_close(game, "Error: too many goals\n");
 }
 
 int	main(void)
@@ -52,7 +58,7 @@ int	main(void)
 	make_window(game);
 	init_images(game);
 	mlx_hook(game->win, X_EVENT_KEY_PRESS, 1, &deal_key, game);
-	mlx_hook(game->win, X_EVENT_KEY_EXIT, 1, &my_close, game);
+	mlx_hook(game->win, X_EVENT_KEY_EXIT, 1, &simple_close, game);
 	mlx_loop_hook(game->mlx, &main_loop, game);
 	mlx_loop(game->mlx);
 }

@@ -23,7 +23,7 @@ void	get_map_size(t_vars *game)
 			column++;
 		}
 		if (game->cols != -1 && game->cols != column)
-			my_close(game, "map is not rectangle");
+			my_close(game, "Error: map is not rectangle\n");
 		game->cols = column;
 		free(receiver);
 	}
@@ -60,7 +60,13 @@ void	read_map(t_vars *game)
 			else if (receiver[column] == 'P')
 				game->map[row][column] = PLAYER;
 			else
-				my_close(game, "illegal charactor.");
+				my_close(game, "Error: illegal charactor.\n");
+
+			if (row == 0 || row == game->rows -1 || column == 0 || column == game->cols -1)
+			{
+				if (game->map[row][column] != WALL)
+					my_close(game, "Error: map is not surrounded WALLs\n");
+			}
 		}
 		free(receiver);
 		row++;
