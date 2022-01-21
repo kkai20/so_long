@@ -8,7 +8,7 @@ int	deal_key(int key_code, t_vars *game)
 	old_player_x = game->player_x;
 	old_player_y = game->player_y;
 	if (key_code == KEY_ESC)
-		exit(0);
+		my_close(game, "");
 	else if (key_code == KEY_W)
 		game->player_y -= 1;
 	else if (key_code == KEY_S)

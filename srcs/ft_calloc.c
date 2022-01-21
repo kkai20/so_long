@@ -10,7 +10,10 @@ void	*ft_calloc(size_t number, size_t size)
 		heap = 1;
 	p = malloc(heap);
 	if (p == NULL)
-		return (NULL);
+	{
+		printf("%s", "malloc error");
+		exit(0);
+	}
 	ft_bzero(p, heap);
 	return (p);
 }

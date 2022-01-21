@@ -9,6 +9,8 @@ void	get_map_size(t_vars *game)
 
 	receiver = NULL;
 	fd1 = open(game->map_filepath, O_RDONLY);
+	if (fd1 == -1)
+		my_close(game, "error open file\n");
 	game->rows = 0;
 	game->cols = -1;
 	while (1)
@@ -39,6 +41,8 @@ void	read_map(t_vars *game)
 	int		ret_value;
 
 	fd2 = open(game->map_filepath, O_RDONLY);
+	if (fd2 == -1)
+		my_close(game, "error open file\n");
 	row = 0;
 	receiver = NULL;
 	while (1)
