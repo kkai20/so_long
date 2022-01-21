@@ -2,7 +2,7 @@
 
 int	my_close(t_vars *game, char *message)
 {
-	(void)game;
+	mlx_destroy_window(game->mlx, game->win);
 	printf("%s", message);
 
 	exit(0);
@@ -24,22 +24,32 @@ void	check_map(t_vars *game)
 		my_close(game, "Error: too many goals\n");
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_vars	*game;
+	int		i;
+	int		j;
 
 	game = (t_vars *)calloc(sizeof(t_vars), 1);
+
+	if (argc != 2)
+		my_close(game, "illegal arguments");
+	game->map_filepath = argv[1];
 	game->key_flag = 1;
 	get_map_size(game);
 	game->map = (int **)calloc(sizeof(int *), game->rows + 1);
-	for (int i = 0; i < game->rows; i++)
+	i = 0;
+	while (i < game->rows)
 	{
 		game->map[i] = (int *) calloc(sizeof(int), game->cols + 1);
+		i++;
 	}
 	read_map(game);
-	for (int i = 0; i < game->rows; i++)
+	i = 0;
+	while (i < game->rows)
 	{
-		for (int j = 0; j < game->cols; j++)
+		j = 0;
+		while (j < game->cols)
 		{
 			if (game->map [i][j] == ITEM)
 				game->itemNum++;
@@ -52,7 +62,9 @@ int	main(void)
 			}
 			if (game->map[i][j] == GOAL)
 				game->goalNum++;
+			j++;
 		}
+		i++;
 	}
 	check_map(game);
 	make_window(game);

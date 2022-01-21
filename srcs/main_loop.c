@@ -4,17 +4,23 @@ int	main_loop(t_vars *game)
 {
 	void	*mlx = game->mlx;
 	void	*mlx_win = game->win;
+	int		i;
+	int		j;
 
 	if (game->key_flag == 1)
 	{
-		for (int i = 0; i < game->rows; i++)
+		i = 0;
+		while (i < game->rows)
 		{
-			for (int j = 0; j < game->cols; j++)
+			j = 0;
+			while (j < game->cols)
 			{
 				mlx_put_image_to_window(mlx, mlx_win,
 					game->images[game->map[i][j]],
 					TILE_SIZE * j, TILE_SIZE * i);
+				j++;
 			}
+			i++;
 		}
 		mlx_put_image_to_window(mlx, mlx_win, game->images[PLAYER],
 			TILE_SIZE * game->player_x, TILE_SIZE * game->player_y);

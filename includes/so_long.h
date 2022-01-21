@@ -70,6 +70,7 @@ typedef struct	s_vars {
 	int		rows;
 	int		cols;
 	void	*images[E_IMAGE_COUNT];
+	char	*map_filepath;
 }				t_vars;
 
 void	make_window(t_vars *game);
