@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:15 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/21 17:58:56 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/22 18:31:23 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	get_map_size(t_vars *game)
 		game->cols = column;
 		free(receiver);
 	}
+	free(receiver);
 	close(fd1);
 }
 
@@ -110,5 +111,6 @@ void	read_map(t_vars *game)
 		free(receiver);
 		row++;
 	}
+	free(receiver);
 	close(fd2);
 }
