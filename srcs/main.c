@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:37 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/21 17:58:43 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/21 23:51:07 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	my_close(t_vars *game, char *message)
 {
-	mlx_destroy_window(game->mlx, game->win);
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
 	printf("%s", message);
 	exit(0);
 }
