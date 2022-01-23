@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:15 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/22 18:31:23 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/23 14:58:56 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	get_map_size(t_vars *game)
 		column = 0;
 		while (receiver[column] != '\0')
 			column++;
+		free(receiver);
 		if (game->cols != -1 && game->cols != column)
 			my_close(game, "Error: map is not rectangle\n");
 		game->cols = column;
-		free(receiver);
 	}
 	free(receiver);
 	close(fd1);

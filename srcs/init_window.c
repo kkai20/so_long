@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:24 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/21 17:58:58 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/23 14:38:25 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 void	make_window(t_vars *game)
 {
 	game->mlx = mlx_init();
+	if (game->mlx == NULL)
+		my_close(game, "malloc error");
 	game->win = mlx_new_window(game->mlx, game->cols * TILE_SIZE,
 			game->rows * TILE_SIZE, "so_long");
+	if (game->win == NULL)
+		my_close(game, "malloc error");
 }
 
 void	init_images(t_vars *game)
