@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:37 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/23 14:28:15 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 02:39:00 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,22 @@ int	simple_close(t_vars *game)
 	exit(0);
 }
 
+int	simple_exit(char *message)
+{
+	printf("%s", message);
+	exit(0);
+}
+
+void	add_game_value(t_vars *game, char *argv)
+{
+	game->map_filepath = argv;
+	game->key_flag = 1;
+	get_map_size(game);
+	game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
+	if (game->map == NULL)
+		simple_exit("malloc error\n");
+}
+
 void	check_map(t_vars *game)
 {
 	if (game->itemNum <= 0)
@@ -54,7 +70,7 @@ void	check_map(t_vars *game)
 	if (game->playerNum != 1)
 		my_close(game, "Error: player must be only one\n");
 	if (game->goalNum <= 0)
-		my_close(game, "Error: too many goals\n");
+		my_close(game, "Error: no goals\n");
 }
 
 void	register_hooks(t_vars *game)
@@ -71,16 +87,23 @@ int	main(int argc, char **argv)
 	int		i;
 
 	game = (t_vars *)ft_calloc(sizeof(t_vars), 1);
+	if (game == NULL)
+		simple_exit("malloc error\n");
 	if (argc != 2)
-		my_close(game, "illegal arguments");
-	game->map_filepath = argv[1];
-	game->key_flag = 1;
-	get_map_size(game);
-	game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
+		my_close(game, "illegal arguments\n");
+	add_game_value(game, argv[1]);
+	// game->map_filepath = argv[1];
+	// game->key_flag = 1;
+	// get_map_size(game);
+	// game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
+	// if (game->map == NULL)
+	// 	simple_exit("malloc error\n");
 	i = 0;
 	while (i < game->rows)
 	{
 		game->map[i] = (int *)ft_calloc(sizeof(int), game->cols + 1);
+		if (game->map[i] == NULL)
+			simple_exit("malloc error\n");
 		i++;
 	}
 	read_map(game);
