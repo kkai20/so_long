@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:15 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/23 14:58:56 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/31 01:46:47 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	get_map_size(t_vars *game)
 	int		fd1;
 	char	*receiver;
 	int		column;
+	int		ret;
 
 	receiver = NULL;
 	fd1 = open(game->map_filepath, O_RDONLY);
@@ -50,20 +51,24 @@ void	get_map_size(t_vars *game)
 		my_close(game, "error open file\n");
 	game->rows = 0;
 	game->cols = -1;
-	while (1)
+	ret = 1;
+	while (ret)
 	{
-		if (get_next_line(fd1, &receiver) != 1)
-			break ;
+		ret = get_next_line(fd1, &receiver);
+			  // if (get_next_line(fd1, &receiver) != 1)
+			  // 	break ;
+		if (ret == -1)
+			my_close(game, "Error: can't read map");
 		game->rows++;
 		column = 0;
 		while (receiver[column] != '\0')
 			column++;
-		free(receiver);
+		game->cols = column;
 		if (game->cols != -1 && game->cols != column)
 			my_close(game, "Error: map is not rectangle\n");
-		game->cols = column;
+		free(receiver);
 	}
-	free(receiver);
+	// free(receiver);
 	close(fd1);
 }
 
@@ -95,22 +100,28 @@ void	read_map(t_vars *game)
 	char	*receiver;
 	int		row;
 	int		column;
+	int		ret;
 
 	fd2 = open(game->map_filepath, O_RDONLY);
 	if (fd2 == -1)
 		my_close(game, "error open file\n");
 	row = 0;
 	receiver = NULL;
-	while (get_next_line(fd2, &receiver) == 1)
+	ret = 1;
+	while (ret)
 	{
+		ret = get_next_line(fd2, &receiver);
+		if (ret == -1)
+			my_close(game, "Error: can't read map");
 		column = -1;
 		while (receiver[++column] != '\0')
 		{
+			printf("%d\n", column);
 			read_map_loop_handler(game, receiver, row, column);
 		}
 		free(receiver);
 		row++;
 	}
-	free(receiver);
+	// free(receiver);
 	close(fd2);
 }

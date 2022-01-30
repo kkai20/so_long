@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 18:40:28 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 16:14:47 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 23:04:05 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_vars {
 	int		**map;
 	int		player_x;
 	int		player_y;
-	int		key_flag;
 	int		itemNum;
 	int		playerNum;
 	int		goalNum;

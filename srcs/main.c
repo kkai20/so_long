@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:37 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 16:59:49 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 23:04:10 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	simple_exit(char *message)
 void	add_game_value(t_vars *game, char *argv)
 {
 	game->map_filepath = argv;
-	game->key_flag = 1;
 	get_map_size(game);
 	game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
 	if (game->map == NULL)
@@ -93,12 +92,6 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		my_close(game, "illegal arguments\n");
 	add_game_value(game, argv[1]);
-	// game->map_filepath = argv[1];
-	// game->key_flag = 1;
-	// get_map_size(game);
-	// game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
-	// if (game->map == NULL)
-	// 	simple_exit("malloc error\n");
 	i = 0;
 	while (i < game->rows)
 	{

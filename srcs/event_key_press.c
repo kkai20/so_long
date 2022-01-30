@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:57:13 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/21 17:58:46 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 23:03:55 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	check_key_code(int key_code, t_vars *game)
 		game->player_x -= 1;
 	else if (key_code == KEY_D)
 		game->player_x += 1;
-	game->key_flag = 1;
 }
 
 int	deal_key(int key_code, t_vars *game)
