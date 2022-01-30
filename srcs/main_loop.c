@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:32 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/29 21:12:23 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 03:55:40 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main_loop(t_vars *game)
 	int		i;
 	int		j;
 
-	if (game->key_flag == 1)
+	if (game->key_flag == 1 || 1)
 	{
 		i = 0;
 		while (i < game->rows)
@@ -25,6 +25,7 @@ int	main_loop(t_vars *game)
 			j = 0;
 			while (j < game->cols)
 			{
+				// printf("%d", game->cols);
 				mlx_put_image_to_window(game->mlx, game->win,
 					game->images[game->map[i][j]],
 					TILE_SIZE * j, TILE_SIZE * i);

@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:37 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 02:39:00 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 16:51:49 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	my_close(t_vars *game, char *message)
 			free(game->map[i]);
 		free(game->map);
 	}
+	printf("%s", "Error\n");
 	printf("%s", message);
 	free(game);
 	exit(0);
