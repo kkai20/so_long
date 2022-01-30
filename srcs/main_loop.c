@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:32 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 18:40:29 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 19:18:18 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,29 @@ int	main_loop(t_vars *game)
 	if (1)
 	{
 		i = 0;
-				mlx_put_image_to_window(game->mlx, game->win, game->images[PLAYER],
-				TILE_SIZE * game->player_x, TILE_SIZE * game->player_y);
+
 		while (i < game->rows)
 		{
 			j = 0;
 			while (j < game->cols)
 			{
-				printf("%d\n", game->map[i][j]);
-				if (game->map[i][j] != PLAYER)
-					{
+				//
+				// 0000
+				// 1111
+				// 1P11
+				// 1111 j
+				// i
+
+					mlx_put_image_to_window(game->mlx, game->win, game->images[PLAYER], TILE_SIZE * game->player_x, TILE_SIZE * game->player_y);
+				// if (game->map[i][j] == 3)
+				// 	printf("%d\n", game->map[i][j]);
 						// printf("hello\n");
+						if (game->map[i][j] != 4)
 						mlx_put_image_to_window(game->mlx, game->win,
 							game->images[game->map[i][j]],
 							TILE_SIZE * j, TILE_SIZE * i);
-					}
-					j++;
-				}
+				j++;
+			}
 			i++;
 		}
 	// 	mlx_put_image_to_window(game->mlx, game->win, game->images[PLAYER],
