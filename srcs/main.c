@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:37 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 16:51:49 by kkai             ###   ########.fr       */
+/*   Updated: 2022/01/30 16:59:49 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ void	add_game_value(t_vars *game, char *argv)
 void	check_map(t_vars *game)
 {
 	if (game->itemNum <= 0)
-		my_close(game, "Error: too few items\n");
+		my_close(game, "missing item\n");
 	if (game->playerNum != 1)
-		my_close(game, "Error: player must be only one\n");
+		my_close(game, "player must be only one\n");
 	if (game->goalNum <= 0)
-		my_close(game, "Error: no goals\n");
+		my_close(game, "missing goal\n");
 }
 
 void	register_hooks(t_vars *game)
