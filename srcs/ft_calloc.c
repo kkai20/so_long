@@ -6,11 +6,11 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:57:45 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/21 17:58:51 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:36:40 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 void	*ft_calloc(size_t number, size_t size)
 {

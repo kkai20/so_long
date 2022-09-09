@@ -6,11 +6,11 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 20:38:38 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 20:44:07 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:37:54 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 int main_loop(t_vars *game)
 {

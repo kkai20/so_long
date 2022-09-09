@@ -6,21 +6,21 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:24 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 16:42:53 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:34:30 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 void	make_window(t_vars *game)
 {
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
-		my_close(game, "malloc error\n");
+		my_close(game, "Error\n malloc error\n");
 	game->win = mlx_new_window(game->mlx, game->cols * TILE_SIZE,
 			game->rows * TILE_SIZE, "so_long");
 	if (game->win == NULL)
-		my_close(game, "malloc error\n");
+		my_close(game, "Error\n malloc error\n");
 }
 
 void	init_images(t_vars *game)
@@ -40,5 +40,5 @@ void	init_images(t_vars *game)
 			&img_width, &img_height);
 	if (!game->images[GOAL] || !game->images[WALL] || !game->images[ITEM]
 		|| !game->images[PLAYER] || !game->images[FREE])
-		my_close(game, "missing imagepath\n");
+		my_close(game, "Error\n missing imagepath\n");
 }

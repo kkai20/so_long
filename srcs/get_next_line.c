@@ -6,11 +6,11 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:05 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/21 17:58:54 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:37:14 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 static int	ft_malloc(char **line, char **buff, int *flag)
 {

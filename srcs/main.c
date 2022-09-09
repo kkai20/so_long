@@ -6,11 +6,11 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:37 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 23:04:10 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:38:05 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 int	my_close(t_vars *game, char *message)
 {
@@ -36,7 +36,7 @@ int	my_close(t_vars *game, char *message)
 			free(game->map[i]);
 		free(game->map);
 	}
-	printf("%s", "Error\n");
+	// printf("%s", "Error\n");
 	printf("%s", message);
 	free(game);
 	exit(0);
@@ -60,17 +60,17 @@ void	add_game_value(t_vars *game, char *argv)
 	get_map_size(game);
 	game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
 	if (game->map == NULL)
-		simple_exit("malloc error\n");
+		simple_exit("Error\n malloc error\n");
 }
 
 void	check_map(t_vars *game)
 {
 	if (game->itemNum <= 0)
-		my_close(game, "missing item\n");
+		my_close(game, "Error\n missing item\n");
 	if (game->playerNum != 1)
-		my_close(game, "player must be only one\n");
+		my_close(game, "Error\n player must be only one\n");
 	if (game->goalNum <= 0)
-		my_close(game, "missing goal\n");
+		my_close(game, "Error\n missing goal\n");
 }
 
 void	register_hooks(t_vars *game)
@@ -88,16 +88,16 @@ int	main(int argc, char **argv)
 
 	game = (t_vars *)ft_calloc(sizeof(t_vars), 1);
 	if (game == NULL)
-		simple_exit("malloc error\n");
+		simple_exit("Error\n malloc error\n");
 	if (argc != 2)
-		my_close(game, "illegal arguments\n");
+		my_close(game, "Error\n illegal arguments\n");
 	add_game_value(game, argv[1]);
 	i = 0;
 	while (i < game->rows)
 	{
 		game->map[i] = (int *)ft_calloc(sizeof(int), game->cols + 1);
 		if (game->map[i] == NULL)
-			simple_exit("malloc error\n");
+			simple_exit("Error\n malloc error\n");
 		i++;
 	}
 	read_map(game);

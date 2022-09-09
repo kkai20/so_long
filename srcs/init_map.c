@@ -6,11 +6,11 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:15 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/31 01:46:47 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:37:33 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 void	count_map(t_vars *game)
 {
@@ -48,7 +48,7 @@ void	get_map_size(t_vars *game)
 	receiver = NULL;
 	fd1 = open(game->map_filepath, O_RDONLY);
 	if (fd1 == -1)
-		my_close(game, "error open file\n");
+		my_close(game, "Error\n open file\n");
 	game->rows = 0;
 	game->cols = -1;
 	ret = 1;
@@ -58,14 +58,14 @@ void	get_map_size(t_vars *game)
 			  // if (get_next_line(fd1, &receiver) != 1)
 			  // 	break ;
 		if (ret == -1)
-			my_close(game, "Error: can't read map");
+			my_close(game, "Error\n can't read map");
 		game->rows++;
 		column = 0;
 		while (receiver[column] != '\0')
 			column++;
 		game->cols = column;
 		if (game->cols != -1 && game->cols != column)
-			my_close(game, "Error: map is not rectangle\n");
+			my_close(game, "Error\n map is not rectangle\n");
 		free(receiver);
 	}
 	// free(receiver);
@@ -85,12 +85,12 @@ void	read_map_loop_handler(t_vars *game, char *receiver, int row, int column)
 	else if (receiver[column] == 'P')
 		game->map[row][column] = PLAYER;
 	else
-		my_close(game, "Error: illegal charactor.\n");
+		my_close(game, "Error\n illegal charactor.\n");
 	if (row == 0 || row == game->rows - 1
 		|| column == 0 || column == game->cols - 1)
 	{
 		if (game->map[row][column] != WALL)
-			my_close(game, "Error: map is not surrounded WALLs\n");
+			my_close(game, "Error\n map is not surrounded WALLs\n");
 	}
 }
 
@@ -104,7 +104,7 @@ void	read_map(t_vars *game)
 
 	fd2 = open(game->map_filepath, O_RDONLY);
 	if (fd2 == -1)
-		my_close(game, "error open file\n");
+		my_close(game, "Error\n error open file\n");
 	row = 0;
 	receiver = NULL;
 	ret = 1;
@@ -112,7 +112,7 @@ void	read_map(t_vars *game)
 	{
 		ret = get_next_line(fd2, &receiver);
 		if (ret == -1)
-			my_close(game, "Error: can't read map");
+			my_close(game, "Error\n can't read map");
 		column = -1;
 		while (receiver[++column] != '\0')
 		{

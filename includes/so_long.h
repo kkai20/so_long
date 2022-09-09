@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 18:40:28 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/30 23:04:05 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 12:31:10 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
-# define GOAL_PATH "./images/goal.xpm"
-# define WALL_PATH "./images/wall.xpm"
-# define ITEM_PATH "./images/item.xpm"
-# define PLAYER_PATH "./images/player.xpm"
-# define FREE_PATH "./images/free.xpm"
+# define GOAL_PATH "../images/goal.xpm"
+# define WALL_PATH "../images/wall.xpm"
+# define ITEM_PATH "../images/item.xpm"
+# define PLAYER_PATH "../images/player.xpm"
+# define FREE_PATH "../images/free.xpm"
 # define TILE_SIZE 64
 
 // enum

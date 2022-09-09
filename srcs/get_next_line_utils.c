@@ -6,11 +6,11 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:57:52 by kkai              #+#    #+#             */
-/*   Updated: 2022/01/22 18:28:24 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:36:56 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 size_t	ft_strlen(char *str)
 {
