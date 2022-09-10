@@ -6,18 +6,14 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 18:40:28 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/09 12:31:10 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/10 16:56:13 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <fcntl.h>
 # include "get_next_line.h"
 # include "mlx.h"
 
@@ -28,11 +24,11 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
-# define GOAL_PATH "../images/goal.xpm"
-# define WALL_PATH "../images/wall.xpm"
-# define ITEM_PATH "../images/item.xpm"
-# define PLAYER_PATH "../images/player.xpm"
-# define FREE_PATH "../images/free.xpm"
+# define GOAL_PATH "./images/goal.xpm"
+# define WALL_PATH "./images/wall.xpm"
+# define ITEM_PATH "./images/item.xpm"
+# define PLAYER_PATH "./images/player.xpm"
+# define FREE_PATH "./images/free.xpm"
 # define TILE_SIZE 64
 
 // enum
@@ -66,10 +62,11 @@ typedef struct s_vars {
 	int		playerNum;
 	int		goalNum;
 	int		step_count;
-	int		rows;
-	int		cols;
+	int		height;
+	int		width;
 	void	*images[E_IMAGE_COUNT];
 	char	*map_filepath;
+	char	*map_line;
 }				t_vars;
 
 void	make_window(t_vars *game);
@@ -79,7 +76,11 @@ void	read_map(t_vars *game);
 int		deal_key(int key_code, t_vars *game);
 int		main_loop(t_vars *game);
 int		my_close(t_vars *game, char *message);
-void	*ft_calloc(size_t number, size_t size);
-void	ft_bzero(void *s, size_t n);
+void	*ft_malloc(size_t number, size_t size);
 void	count_map(t_vars *game);
+size_t	ft_strlcpy(char *dest, const char *src, size_t destsize);
+char	**ft_split(char const *s, char c);
+char	*ft_mapdup(char *src);
+char	*ft_mapjoin(char const *s1, char const *s2);
+
 #endif

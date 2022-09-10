@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_mapdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 18:40:43 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/10 15:22:59 by kkai             ###   ########.fr       */
+/*   Created: 2021/04/21 12:40:37 by kkai              #+#    #+#             */
+/*   Updated: 2022/09/10 17:00:57 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFFER_SIZE 1024
+#include "../includes/so_long.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
+char	*ft_mapdup(char *src)
+{
+	size_t	num;
+	char	*dest;
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(char *str);
-char	*ft_strjoin(char *line, char *buff, size_t n_add);
-char	*ft_strdup(char *src);
-
-#endif
+	num = ft_strlen(src);
+	dest = (char *)ft_malloc(sizeof(char *), (num + 1));
+	num = 0;
+	while (src[num] != '\n' && src[num] != '\0')
+	{
+		dest[num] = src[num];
+		num++;
+	}
+	dest[num] = '\0';
+	return (dest);
+}

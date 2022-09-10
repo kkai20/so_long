@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 17:57:45 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/09 00:36:40 by kkai             ###   ########.fr       */
+/*   Created: 2022/09/10 12:47:51 by kkai              #+#    #+#             */
+/*   Updated: 2022/09/10 13:33:57 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	*ft_calloc(size_t number, size_t size)
+char	*ft_strdup_without_newline(char *line)
 {
-	void	*p;
-	size_t	heap;
+	char	*heap;
+	int		size;
+	int		i;
 
-	heap = number * size;
-	if (heap == 0)
-		heap = 1;
-	p = malloc(heap);
-	if (p == NULL)
-	{
-		printf("%s", "malloc error");
-		exit(0);
-	}
-	ft_bzero(p, heap);
-	return (p);
+	heap = NULL;
+	size = ft_strlen(line);
+	i = 0;
+	heap = (char *)ft_malloc(sizeof(char *), size + 1);
+	while
+
 }

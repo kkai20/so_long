@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 17:57:36 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/09 00:36:17 by kkai             ###   ########.fr       */
+/*   Created: 2022/01/21 17:57:45 by kkai              #+#    #+#             */
+/*   Updated: 2022/09/10 10:34:49 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_malloc(size_t byte, size_t size)
 {
-	unsigned char	*p;
+	void	*heap;
 
-	p = (unsigned char *)s;
-	while (n > 0)
+	heap = malloc(byte * size);
+	if (heap == NULL)
 	{
-		*p = '\0';
-		p++;
-		n--;
+		perror("malloc error\n");
+		exit(EXIT_FAILURE);
 	}
+	return (heap);
 }

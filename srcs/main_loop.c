@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 20:38:38 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/09 00:37:54 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/10 13:41:49 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int main_loop(t_vars *game)
 	int j;
 
 	i = 0;
-	while (i < game->rows)
+	while (i < game->height)
 	{
 		j = 0;
-		while (j < game->cols)
+		while (j < game->width)
 		{
 			if (i == game->player_y && j == game->player_x)
 				mlx_put_image_to_window(game->mlx, game->win, game->images[PLAYER],

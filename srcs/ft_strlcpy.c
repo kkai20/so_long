@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 18:40:43 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/10 15:22:59 by kkai             ###   ########.fr       */
+/*   Created: 2021/04/12 20:22:26 by kkai              #+#    #+#             */
+/*   Updated: 2022/09/10 16:18:13 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFFER_SIZE 1024
+#include "../includes/so_long.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
+size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
+{
+	size_t	n;
+	size_t	size;
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(char *str);
-char	*ft_strjoin(char *line, char *buff, size_t n_add);
-char	*ft_strdup(char *src);
-
-#endif
+	size =ft_strlen((char *)src);
+	n = 0;
+	if (destsize != 0)
+	{
+		while (n < destsize - 1 && src[n] != '\0')
+		{
+			dest[n] = src[n];
+			n++;
+		}
+		dest[n] = '\0';
+	}
+	return (size);
+}

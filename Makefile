@@ -2,14 +2,16 @@ NAME	 	= so_long
 SRCSDIR		= ./srcs
 SRCS 	 	= \
 	$(SRCSDIR)/main.c\
-	$(SRCSDIR)/ft_calloc.c\
-	$(SRCSDIR)/ft_bzero.c\
+	$(SRCSDIR)/ft_malloc.c\
 	$(SRCSDIR)/init_map.c\
 	$(SRCSDIR)/init_window.c\
 	$(SRCSDIR)/event_key_press.c\
 	$(SRCSDIR)/main_loop.c\
 	$(SRCSDIR)/get_next_line.c\
-	$(SRCSDIR)/get_next_line_utils.c
+	$(SRCSDIR)/get_next_line_utils.c\
+	$(SRCSDIR)/ft_strlcpy.c\
+	$(SRCSDIR)/ft_mapjoin.c\
+	$(SRCSDIR)/ft_mapdup.c\
 
 OBJSDIR		= ./objs
 OBJS 		= $(addprefix $(OBJSDIR)/, $(notdir $(SRCS:.c=.o)))
@@ -26,13 +28,13 @@ DEPENDS   		= $(OBJS:.o=.d)
 
 CC 				= gcc
 CFLAGS			= -Werror -Wall -Wextra -MMD -MP -g
-CFLAGS_MLX		= -Imlx_linux -O3
+CFLAGS_MLX		= -Imlx_linux -O0
 #CFLAGS_MLX		= -L/usr/X11R6/lib -lX11 -lXext -framework OpenGL -framework AppKit
 DEGUB_CFLAGS	= -g3 -fsanitize=address
 RM				= /bin/rm -f
 INCLUDES 		= -I./includes
 
-CFLAGS += $(CFLAGS_MLX)
+CFLAGS += $(CFLAGS_MLX) $(DEGUB_CFLAGS)
 
 .PHONY: all
 all: $(NAME)

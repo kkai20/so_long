@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:37 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/09 00:38:05 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/10 16:38:51 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,28 @@ int	my_close(t_vars *game, char *message)
 			free(game->map[i]);
 		free(game->map);
 	}
-	// printf("%s", "Error\n");
-	printf("%s", message);
+	perror(message);
 	free(game);
-	exit(0);
+	exit(EXIT_FAILURE);
 }
 
 int	simple_close(t_vars *game)
 {
 	my_close(game, "");
-	exit(0);
+	exit(EXIT_FAILURE);
 }
 
 int	simple_exit(char *message)
 {
-	printf("%s", message);
-	exit(0);
+	perror(message);
+	exit(EXIT_FAILURE);
 }
 
 void	add_game_value(t_vars *game, char *argv)
 {
 	game->map_filepath = argv;
 	get_map_size(game);
-	game->map = (int **)ft_calloc(sizeof(int *), game->rows + 1);
-	if (game->map == NULL)
-		simple_exit("Error\n malloc error\n");
+	game->map = (int **)ft_malloc(sizeof(int *), game->height + 1);
 }
 
 void	check_map(t_vars *game)
@@ -86,16 +83,16 @@ int	main(int argc, char **argv)
 	t_vars	*game;
 	int		i;
 
-	game = (t_vars *)ft_calloc(sizeof(t_vars), 1);
-	if (game == NULL)
-		simple_exit("Error\n malloc error\n");
+	game = (t_vars *)ft_malloc(sizeof(t_vars), 1);
 	if (argc != 2)
 		my_close(game, "Error\n illegal arguments\n");
 	add_game_value(game, argv[1]);
 	i = 0;
-	while (i < game->rows)
+	while (i < game->height)
 	{
-		game->map[i] = (int *)ft_calloc(sizeof(int), game->cols + 1);
+		//game->map[i] = (int *)ft_malloc(sizeof(int), game->wid + 1);
+		game->map[i] = (int *)ft_malloc(sizeof(int), game->width);
+
 		if (game->map[i] == NULL)
 			simple_exit("Error\n malloc error\n");
 		i++;
