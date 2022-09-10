@@ -6,13 +6,13 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 17:04:18 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/10 23:36:44 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/11 01:42:14 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	ft_strlcpy(char *dst, char *src, int len)
+int		ft_strlcpy(char *dst, char *src, int len)
 {
 	int src_len;
 	int i;
@@ -34,7 +34,7 @@ int	ft_strlcpy(char *dst, char *src, int len)
 	return (src_len);
 }
 
-char *ft_mapjoin(char *s1, char *s2)
+char	*ft_mapjoin(char *s1, char *s2)
 {
 	char	*heap;
 	int		s1_len;
