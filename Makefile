@@ -9,28 +9,21 @@ SRCS 	 	= \
 	$(SRCSDIR)/main_loop.c\
 	$(SRCSDIR)/get_next_line.c\
 	$(SRCSDIR)/get_next_line_utils.c\
-	$(SRCSDIR)/ft_strlcpy.c\
 	$(SRCSDIR)/ft_mapjoin.c\
 	$(SRCSDIR)/ft_mapdup.c\
+	$(SRCSDIR)/move.c\
 
 OBJSDIR		= ./objs
 OBJS 		= $(addprefix $(OBJSDIR)/, $(notdir $(SRCS:.c=.o)))
 
-
-minilibx_DIR	= ./minilibx-linux
-minilibx_A			= $(minilibx_DIR)/libmlx_Linux.a
-DEPENDS   		= $(OBJS:.o=.d)
-
-LIBFT_DIR	= ./libft
+LIBFT_DIR		= ./libft
 LIBFT_A			= $(LIBFT_DIR)/libft.a
 DEPENDS   		= $(OBJS:.o=.d)
 
 
 CC 				= gcc
-CFLAGS			= -Werror -Wall -Wextra -MMD -MP -g
-CFLAGS_MLX		= -Imlx_linux -O0
-#CFLAGS_MLX		= -L/usr/X11R6/lib -lX11 -lXext -framework OpenGL -framework AppKit
-DEGUB_CFLAGS	= -g3 -fsanitize=address
+CFLAGS			= -Werror -Wall -Wextra -g
+DEGUB_CFLAGS	= -fsanitize=address -O0
 RM				= /bin/rm -f
 INCLUDES 		= -I./includes
 
@@ -39,9 +32,11 @@ CFLAGS += $(CFLAGS_MLX) $(DEGUB_CFLAGS)
 .PHONY: all
 all: $(NAME)
 
-$(NAME): $(OBJS) $(minilibx_A)
-	$(CC) $(CFLAGS) -o  $@  $(OBJS) $(INCLUDES) $(minilibx_A)  -L/usr/lib -Imlx_linux -lXext -lX11 -lm
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o  $@  $(OBJS) $(INCLUDES) -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
+%.o: %.c
+	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 $(OBJSDIR)/%.o: $(SRCSDIR)/%.c
 	@mkdir -p $(OBJSDIR)

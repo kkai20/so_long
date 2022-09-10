@@ -6,13 +6,13 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 20:38:38 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/10 13:41:49 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/10 21:51:57 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int main_loop(t_vars *game)
+/*int main_loop(t_vars *game)
 {
 	int i;
 	int j;
@@ -28,10 +28,11 @@ int main_loop(t_vars *game)
 				TILE_SIZE * game->player_x, TILE_SIZE * game->player_y);
 			else
 				mlx_put_image_to_window(game->mlx, game->win,
-				game->images[game->map[i][j]], TILE_SIZE * j, TILE_SIZE * i);
+				game->images[game->map_line], TILE_SIZE * j, TILE_SIZE * i);
 			j++;
 		}
 		i++;
 	}
 	return (0);
 }
+*/

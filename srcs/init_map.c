@@ -6,7 +6,7 @@
 /*   By: kkai <kkai@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:58:15 by kkai              #+#    #+#             */
-/*   Updated: 2022/09/10 16:54:32 by kkai             ###   ########.fr       */
+/*   Updated: 2022/09/10 23:42:42 by kkai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,132 +14,120 @@
 
 void	count_map(t_vars *game)
 {
-	int	i;
-	int	j;
+	int		i;
 
-	i = -1;
-	while (++i < game->height)
+	i = 0;
+	while (i >=0 && (size_t)i < ft_strlen(game->map_line))
 	{
-		j = -1;
-		while (++j < game->width)
+		if (game->map_line[i] == ITEM)
+			game->itemNum++;
+		if (game->map_line[i] == PLAYER)
 		{
-			if (game->map[i][j] == ITEM)
-				game->itemNum++;
-			if (game->map[i][j] == PLAYER)
-			{
-				game->playerNum++;
-				game->player_x = j;
-				game->player_y = i;
-				game->map[i][j] = FREE;
-			}
-			if (game->map[i][j] == GOAL)
-				game->goalNum++;
+			game->playerNum++;
+			// game->player_x = j;
+			game->player_y = i;
+			game->map_line[i] = FREE;
 		}
+		if (game->map_line[i] == GOAL)
+			game->goalNum++;
+		i++;
 	}
 }
 
-void	get_map_size(t_vars *game)
+
+void	read_map(t_vars *game)
 {
-	int		fd1;
+	int		fd;
 	char	*line;
 	int		flag;
 
-	line = NULL;
-	fd1 = open(game->map_filepath, O_RDONLY);
-	if (fd1 == -1)
-		my_close(game, "Error\n open file\n");
-	flag = get_next_line(fd1, &line);
+	fd = ft_open(game->map_filepath, O_RDONLY);
+	flag = get_next_line(fd, &line);
 	if (flag == -1)
-		my_close(game, "Error\n can't read map");
+		my_close(game, "Error\n Can't read map");
 	game->height = 0;
 	game->width = ft_strlen(line) - 1;
 	game->map_line = ft_mapdup(line);
 	free(line);
-	while (flag)
+	while (flag > 0)
 	{
 		game->height++;
-		flag = get_next_line(fd1, &line);
-		if (flag)
+		flag = get_next_line(fd, &line);
+		if (flag >= 0)
 		{
 			game->map_line = ft_mapjoin(game->map_line, line);
 		}
-		// if (game->width != -1 && game->width != wid)
-		// 	my_close(game, "Error\n map is not rectangle\n");
+		printf("finish\n");
 	}
-	// free(line);
-	close(fd1);
-	printf("%s\n", game->map_line);
+	ft_close(fd);
 }
 
-void	read_map_loop_handler(t_vars *game, char *line, int height, int width)
+void	check_wall(t_vars *game)
 {
-	if (line[width] == '0')
-		game->map[height][width] = FREE;
-	else if (line[width] == '1')
-		game->map[height][width] = WALL;
-	else if (line[width] == 'C')
-		game->map[height][width] = ITEM;
-	else if (line[width] == 'E')
-		game->map[height][width] = GOAL;
-	else if (line[width] == 'P')
-		game->map[height][width] = PLAYER;
-	else
-	my_close(game, "Error\n illegal charactor.\n");
-	if (height == 0 || height == game->height - 1
-		|| width == 0 || width == game->width - 1)
+	int		i;
+
+	i = 0;
+	while (i >=0 && (size_t)i < ft_strlen(game->map_line))
 	{
-		if (game->map[height][width] != WALL)
-			my_close(game, "Error\n map is not surrounded WALLs\n");
+		if (i < game->width)
+		{
+			if (game->map_line[i] != WALL)
+				my_close(game, "Error\n map is not surrounded WALLs\n");
+		}
+		else if (i % game->width == 0 || i % game->width == game->width - 1)
+		{
+			if (game->map_line[i] != WALL)
+				my_close(game, "Error\n map is not surrounded WALLs\n");
+		}
+		else if ( i >= 0 && (size_t)i > ft_strlen(game->map_line) - game->width)
+		{
+			if (game->map_line[i] != WALL)
+				my_close(game, "Error\n map is not surrounded WALLs\n");
+		}
+		i++;
 	}
 }
 
-void	read_map(t_vars	*game)
+void	put_image_handler(t_vars *game, char *map_line, int wid, int hei)
 {
-	int		h;
-	int		wid;
+	if (map_line[hei * game->width + wid] == '0')
+	{
+		mlx_put_image_to_window(game->mlx, game->win, game->images[FREE], TILE_SIZE * wid, TILE_SIZE * hei);
+	}
+	else if (map_line[hei * game->width + wid] == '1')
+	{
+		mlx_put_image_to_window(game->mlx, game->win, game->images[WALL], TILE_SIZE * wid, TILE_SIZE * hei);
+	}
+	else if (map_line[hei * game->width + wid] == 'C')
+		mlx_put_image_to_window(game->mlx, game->win, game->images[ITEM], TILE_SIZE * wid, TILE_SIZE * hei);
+	else if (map_line[hei * game->width + wid] == 'E')
+		mlx_put_image_to_window(game->mlx, game->win, game->images[GOAL], TILE_SIZE * wid, TILE_SIZE * hei);
+	else if (map_line[hei * game->width + wid] == 'P')
+		mlx_put_image_to_window(game->mlx, game->win, game->images[PLAYER], TILE_SIZE * wid, TILE_SIZE * hei);
+	else
+		my_close(game, "Error\n illegal charactor.\n");
+	// if (height == 0 || height == game->height - 1
+	// 	|| width == 0 || width == game->width - 1)
+	// {
+	// 	if (game->map[height][width] != WALL)
+	// 		my_close(game, "Error\n map is not surrounded WALLs\n");
+	// }
+}
 
-	h = 0;
-	while (h < game->height)
+void	set_map(t_vars *game)
+{
+	int hei;
+	int wid;
+
+	hei = 0;
+	while (hei < game->height)
 	{
 		wid = 0;
 		while (wid < game->width)
 		{
-			read_map_loop_handler(game, game->map_line, game->height, game->width);
+			put_image_handler(game, game->map_line, wid, hei);
 			wid++;
 		}
-		h++;
+		hei++;
 	}
 }
-
-
-/* void	read_map(t_vars *game)
-{
-	int		fd2;
-	char	*line;
-	int		height;
-	int		width;
-	int		ret;
-
-	fd2 = open(game->map_filepath, O_RDONLY);
-	if (fd2 == -1)
-		my_close(game, "Error\n error open file\n");
-	height = 0;
-	line = NULL;
-	ret = 1;
-	while (ret)
-	{
-		ret = get_next_line(fd2, &line);
-		if (ret == -1)
-			my_close(game, "Error\n can't read map");
-		width = -1;
-		while (line[++width] != '\0')
-		{
-			printf("%d\n", width);
-			read_map_loop_handler(game, line, height, width);
-		}
-		free(line);
-		height++;
-	}
-	// free(line);
-	close(fd2);
-}*/
